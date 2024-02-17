@@ -5,13 +5,14 @@ const path = require('path')
 let args = process.argv
 // filepath is last item
 const filepath = args[2]
+const filetype = args[3]
 
 if (filepath) {
     createDirectory()
     let files = fs.readdirSync(`${filepath}`)
 
     let groupedList = files.reduce((acc, currentFile) => {
-        let filename = path.basename(currentFile, '.txt')
+        let filename = path.basename(currentFile, filetype)
         let keyname = ""
 
         if (hasSuffix(filename)) {
@@ -77,6 +78,7 @@ function createDirectory() {
     fs.mkdir(path.join(__dirname, "dupes"), (err) => {
         if (err) {
             console.error(err)
+            return
         }
         console.log('created directory successfully')
     })
