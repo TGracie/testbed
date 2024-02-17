@@ -7,6 +7,7 @@ let args = process.argv
 const filepath = args[2]
 
 if (filepath) {
+    createDirectory()
     let files = fs.readdirSync(`${filepath}`)
 
     let groupedList = files.reduce((acc, currentFile) => {
@@ -51,15 +52,6 @@ if (filepath) {
         });
     });
 
-    // console.log(onlydupes)
-
-    fs.mkdir(path.join(__dirname, "dupes"), (err) => {
-        if (err) {
-            // return console.error(err)
-        }
-        console.log('created directory successfully')
-    })
-
 } else {
     console.error("No filepath supplied")
 }
@@ -81,7 +73,11 @@ function moveFile(filename) {
     });
 }
 
-// once finished running
-// read map[filename][list of filenames]
-// if length of values is greater than 1
-//  move all but 1 to dupes directory
+function createDirectory() {
+    fs.mkdir(path.join(__dirname, "dupes"), (err) => {
+        if (err) {
+            console.error(err)
+        }
+        console.log('created directory successfully')
+    })
+}
